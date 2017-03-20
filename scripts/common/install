@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+SCRIPT_DIR=$(dirname $0)
+ADDED_DIR=${SCRIPT_DIR}/added
+ARTIFACTS_DIR=/tmp/artifacts
+
+yum install -y nss_wrapper
+yum clean all
+
+mkdir -p $APP_ROOT/src && mkdir -p $APP_ROOT/etc
+chown -R 1001:0 $APP_ROOT && chmod a+rwX -R $APP_ROOT
+cp $ADDED_DIR/utils/* $APP_ROOT/src
+cp $SCRIPT_DIR/generate_container_user $APP_ROOT/etc
+
+cp $ARTIFACTS_DIR/oshinko-cli_v0.2.2_linux_amd64.tar.gz $APP_ROOT/src
+pushd $APP_ROOT/src
+tar -zxf oshinko-cli_v0.2.2_linux_amd64.tar.gz
+mv oshinko-cli_linux_amd64 oshinko-cli
+rm -rf oshinko-cli_v0.2.2_linux_amd64.tar.gz
+popd

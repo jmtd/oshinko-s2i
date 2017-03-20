@@ -1,0 +1,41 @@
+name: "redhat-spark-java-1-alpha/java-spark1.0-openshift"
+version: 0.1
+release: 1
+from: "fabric8/s2i-java:latest"
+user: 1001
+labels:
+  - name: "io.k8s.description"
+    value: "Platform for building a radanalytics java spark app"
+  - name: io.k8s.display-name"
+    value: "radanalytics java_spark"
+  - name: "io.openshift.expose-services"
+    value: "8080:http"
+  - name: "io.openshift.s2i.scripts-url"
+    value: "image:///usr/local/s2i"
+  - name: "io.openshift.tags"
+    value: "builder,radanalytics,java_spark"
+envs:
+  information:
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/spark/bin
+    - name: SPARK_HOME
+      value: /opt/spark
+    - name: APP_ROOT
+      value: /opt/app-root
+cmd:
+  - "/usr/local/s2i/usage"
+packages:
+  - epel-release
+  - make
+  - git
+  - gcc
+scripts:
+  - package: common
+    exec: install
+  - package: java
+    exec: install
+sources:
+  - url: https://dist.apache.org/repos/dist/release/spark/spark-2.1.0/spark-2.1.0-bin-hadoop2.7.tgz
+    md5sum: 50E73F255F9BDE50789AD5BD657C7A71
+  - url: https://github.com/radanalyticsio/oshinko-cli/releases/download/v0.2.2/oshinko-cli_v0.2.2_linux_amd64.tar.gz
+    md5sum: e84c9684b75fcd8c56491484b7f9af1f

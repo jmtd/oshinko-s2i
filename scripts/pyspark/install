@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+SCRIPT_DIR=$(dirname $0)
+ADDED_DIR=${SCRIPT_DIR}/added
+ARTIFACTS_DIR=/tmp/artifacts
+
+cp $ARTIFACTS_DIR/spark-2.1.0-bin-hadoop2.7.tgz /opt
+pushd /opt
+tar -zxf spark-2.1.0-bin-hadoop2.7.tgz
+ln -s spark-2.1.0-bin-hadoop2.7 spark
+popd
+
+mkdir -p /usr/local/s2i
+cp -r $ADDED_DIR/s2i/* /usr/local/s2i
+cp $ADDED_DIR/spark-conf/* /opt/spark/conf/

@@ -1,0 +1,42 @@
+name: "redhat-spark-scala-1-alpha/scala-spark1.0-openshift"
+version: "0.1"
+release: "dev"
+from: "redhat-spark-2-alpha/spark2.1-hadoop2.7-openshift"
+user: 1001
+labels:
+  - name: "io.k8s.description"
+    value: "Platform for building a radanalytics Scala Spark app"
+  - name: "io.k8s.display-name"
+    value: "radanalytics scala_spark"
+  - name: "io.openshift.expose-services"
+    value: "8080:http"
+  - name: "io.openshift.s2i.scripts-url"
+    value: "image:///usr/local/s2i"
+  - name: "io.openshift.tags"
+    value: "builder,radanalytics,scala_spark"
+envs:
+  information:
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/spark/bin:/opt/scala/bin:/opt/sbt/bin
+    - name: SPARK_HOME
+      value: /opt/spark
+    - name: APP_ROOT
+      value: /opt/app-root
+    - name: SBT_OPTS
+      value: -Dsbt.global.base=/tmp/.sbt -Dsbt.ivy.home=/tmp/.ivy2 -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled
+packages:
+  - git
+cmd:
+  - /usr/local/s2i/usage
+scripts:
+  - package: common
+    exec: install
+  - package: scala
+    exec: install
+sources:
+  - url: "http://downloads.lightbend.com/scala/2.11.8/scala-2.11.8.tgz"
+    md5sum: e7e1f7ddc8873d228d611e801b8d2795
+  - url: https://github.com/radanalyticsio/oshinko-cli/releases/download/v0.2.2/oshinko-cli_v0.2.2_linux_amd64.tar.gz
+    md5sum: e84c9684b75fcd8c56491484b7f9af1f
+  - url: https://dl.bintray.com/sbt/native-packages/sbt/0.13.13/sbt-0.13.13.tgz
+    md5sum: 30a238d1b0cc2821da2b9b4e830ef204
