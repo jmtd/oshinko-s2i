@@ -1,7 +1,7 @@
 name: "redhat-pyspark-1-alpha/pyspark1.0-openshift"
 version: 0.1
 release: 1
-from: "centos/python-27-centos7:latest"
+from: " rhscl/python-27-rhel7:latest"
 user: 1001
 labels:
   - name: "io.k8s.description"

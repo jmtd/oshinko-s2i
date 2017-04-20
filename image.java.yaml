@@ -1,7 +1,7 @@
 name: "redhat-spark-java-1-alpha/java-spark1.0-openshift"
 version: 0.1
 release: 1
-from: "fabric8/s2i-java:latest"
+from: "redhat-openjdk-18/openjdk18-openshift:latest"
 user: 1001
 labels:
   - name: "io.k8s.description"
