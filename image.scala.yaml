@@ -1,7 +1,7 @@
-name: "redhat-spark-scala-1-alpha/scala-spark1.0-openshift"
-version: "0.1"
-release: "dev"
-from: "redhat-spark-2-alpha/spark2.1-hadoop2.7-openshift:latest"
+name: "redhat-radanalytics-1-tech-preview/radanalytics10-scala211-openshift"
+version: 1.0
+release: dev
+from: "redhat-radanalytics-1-tech-preview/radanalytics10-spark21-hadoop27-openshift"
 user: 1001
 labels:
   - name: "io.k8s.description"
